@@ -1,7 +1,11 @@
 new Vue({
     el: '#app',
     data: {
-        currencies: {}
+        currencies: {},
+        amount: null,
+        // defaultの通貨セットを用意
+        from: 'EUR',
+        to: 'USD'
     },
     mounted() {
         this.getCurrencires()
