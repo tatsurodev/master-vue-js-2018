@@ -5,7 +5,8 @@ new Vue({
         amount: null,
         // defaultの通貨セットを用意
         from: 'EUR',
-        to: 'USD'
+        to: 'USD',
+        result: 0,
     },
     mounted() {
         this.getCurrencires()
@@ -15,6 +16,11 @@ new Vue({
         formattedCurrencies() {
             // Object.valuesでオブジェクトの値を配列にして返す
             return Object.values(this.currencies)
+        },
+        // convert結果を表示
+        calculateResult() {
+            // inputから取得できるdataは文字列なので型変換して計算
+            return (Number(this.amount) * this.result).toFixed(3);
         }
     },
     methods: {
@@ -38,6 +44,14 @@ new Vue({
                 // JSON.stringifyは、JSON.parseの逆
                 localStorage.setItem('currencies', JSON.stringify(response.data.results))
             })
+        },
+        convertCurrency() {
+            const key = `${this.from}_${this.to}`
+            axios.get(`https://free.currconv.com/api/v7/convert?q=${key}&apiKey=237d851531b84315a6ef`).then(response => {
+                console.log(response.data)
+                this.result = response.data.results[key].val
+            })
+
         }
     }
 })
