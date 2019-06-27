@@ -30,6 +30,12 @@
                 addCounter: function () {
                     this.count++
                 }
+            },
+            // 算出プロパティでロジックをテンプレートからvueインスタンス側へ取り除くことができる
+            computed: {
+                isEvenNumber() {
+                    return this.count % 2 === 0
+                }
             }
         })
     </script>
