@@ -6,6 +6,13 @@ new Vue({
     mounted() {
         this.getCurrencires()
     },
+    computed: {
+        // 通貨リストをv-for用にオブジェクトから配列にする
+        formattedCurrencies() {
+            // Object.valuesでオブジェクトの値を配列にして返す
+            return Object.values(this.currencies)
+        }
+    },
     methods: {
         // 通貨リスト取得
         // https://free.currencyconverterapi.com/
