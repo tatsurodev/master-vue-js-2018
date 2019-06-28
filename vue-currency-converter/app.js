@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
     data: {
         currencies: {},
-        amount: null,
+        amount: 0,
         // defaultの通貨セットを用意
         from: 'EUR',
         to: 'USD',
@@ -21,6 +21,11 @@ new Vue({
         calculateResult() {
             // inputから取得できるdataは文字列なので型変換して計算
             return (Number(this.amount) * this.result).toFixed(3);
+        },
+        // convert buttonをdisabledにする
+        disabled() {
+            // 0 or 入力なし
+            return this.amount === 0 || !this.amount;
         }
     },
     methods: {
