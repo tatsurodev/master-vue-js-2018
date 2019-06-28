@@ -60,5 +60,14 @@ new Vue({
             })
 
         }
+    },
+    watch: {
+        // from or toが変化したら、convert結果を0にする
+        from() {
+            this.result = 0
+        },
+        to() {
+            this.result = 0
+        }
     }
 })
