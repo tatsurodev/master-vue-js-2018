@@ -19,4 +19,19 @@ Vue.component('card', {
 
 new Vue({
     el: '#app',
+    data: {
+        articles: [{
+                title: 'Build fullstack applications with laravel and vuejs',
+                content: 'ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making i over 2000',
+            },
+            {
+                title: 'Where does it come from?',
+                content: 'Sed ut bla bla bla...'
+            },
+            {
+                title: '1914 translation by H.Rackham',
+                content: 'But I msut explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give.'
+            }
+        ]
+    }
 })
