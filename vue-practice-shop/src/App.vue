@@ -5,6 +5,7 @@
         <div class="row">
           <div :key="product.id" class="col-md-6" v-for="product in Products">
             <!-- custom eventをキャッチ -->
+            <!-- addToCartの引数が$eventでなくproductなのはループで対象のproductがCart componentからemitされたcustom eventから取得しなくても分かっているため -->
             <product
               :isInCart="isInCart(product)"
               @add-to-cart="addToCart(product)"
@@ -14,7 +15,7 @@
         </div>
       </div>
       <div class="col-md-5 my-5">
-        <cart :items="cart"></cart>
+        <cart :items="cart" @remove-from-cart="removeFromCart($event)"></cart>
       </div>
     </div>
   </div>
@@ -51,6 +52,10 @@ export default {
         return true;
       }
       return false;
+    },
+    // カートから削除
+    removeFromCart(product) {
+      this.cart = this.cart.filter(item => item.id !== product.id);
     }
   }
 };
