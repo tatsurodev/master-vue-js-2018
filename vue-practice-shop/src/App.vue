@@ -4,7 +4,8 @@
       <div class="col-md-7">
         <div class="row">
           <div :key="product.id" class="col-md-6" v-for="product in Products">
-            <product :product="product"></product>
+            <!-- custom eventをキャッチ -->
+            <product @add-to-cart="addToCart(product)" :product="product"></product>
           </div>
         </div>
       </div>
@@ -24,8 +25,14 @@ export default {
   },
   data() {
     return {
-      Products
+      Products,
+      cart: []
     };
+  },
+  methods: {
+    addToCart(product) {
+      this.cart.push(product);
+    }
   }
 };
 </script>
