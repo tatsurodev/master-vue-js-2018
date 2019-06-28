@@ -5,7 +5,11 @@
         <div class="row">
           <div :key="product.id" class="col-md-6" v-for="product in Products">
             <!-- custom eventをキャッチ -->
-            <product @add-to-cart="addToCart(product)" :product="product"></product>
+            <product
+              :isInCart="isInCart(product)"
+              @add-to-cart="addToCart(product)"
+              :product="product"
+            ></product>
           </div>
         </div>
       </div>
@@ -26,12 +30,23 @@ export default {
   data() {
     return {
       Products,
+      // カートに入れたproductを格納
       cart: []
     };
   },
   methods: {
     addToCart(product) {
       this.cart.push(product);
+    },
+    // productがカートの中にあるかどうか
+    isInCart(product) {
+      const item = this.cart.find(item => {
+        return item.id === product.id;
+      });
+      if (item) {
+        return true;
+      }
+      return false;
     }
   }
 };
