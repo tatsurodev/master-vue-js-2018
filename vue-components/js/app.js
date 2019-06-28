@@ -12,9 +12,16 @@ Vue.component('card', {
         <div class="card-text">
             {{ content }}
         </div>
+        <button @click="deleteArticle" class="btn btn-danger btn-sm">Delete Me</button>
     </div>
 </div>
-`
+`,
+    methods: {
+        deleteArticle() {
+            // custom eventを発火させ、親に伝える
+            this.$emit('delete-article', this.title)
+        }
+    }
 })
 
 new Vue({
@@ -33,5 +40,11 @@ new Vue({
                 content: 'But I msut explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give.'
             }
         ]
+    },
+    methods: {
+        removeArticle(event) {
+            console.log(event)
+            this.articles = this.articles.filter(article => article.title !== event)
+        }
     }
 })
