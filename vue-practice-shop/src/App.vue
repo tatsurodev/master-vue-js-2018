@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="col-md-5 my-5">
-        <cart :items="cart" @remove-from-cart="removeFromCart($event)"></cart>
+        <cart :items="cart" @remove-from-cart="removeFromCart($event)" @pay="pay()"></cart>
       </div>
     </div>
   </div>
@@ -56,6 +56,11 @@ export default {
     // カートから削除
     removeFromCart(product) {
       this.cart = this.cart.filter(item => item.id !== product.id);
+    },
+    // カートの中身をクリアに
+    pay() {
+      this.cart = [];
+      alert("Shopping completed!");
     }
   }
 };
