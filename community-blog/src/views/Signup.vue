@@ -6,12 +6,21 @@
           <h3 class="text-center my-5">Signup</h3>
           <div class="form-group">
             <input v-model="name" type="text" placeholder="Name" class="form-control">
+            <div class="errors" v-if="errors.name">
+              <small class="text-danger" v-for="error in errors.name" :key="error">{{ error }}</small>
+            </div>
           </div>
           <div class="form-group">
             <input v-model="email" type="text" placeholder="Email" class="form-control">
+            <div class="errors" v-if="errors.email">
+              <small class="text-danger" v-for="error in errors.email" :key="error">{{ error }}</small>
+            </div>
           </div>
           <div class="form-group">
             <input v-model="password" type="password" placeholder="Password" class="form-control">
+            <div class="errors" v-if="errors.password">
+              <small class="text-danger" v-for="error in errors.password" :key="error">{{ error }}</small>
+            </div>
           </div>
           <div class="form-group text-center">
             <button @click="registerUser()" class="btn btn-success form-control">Signup</button>
@@ -29,7 +38,8 @@ export default {
     return {
       name: "",
       email: "",
-      password: ""
+      password: "",
+      errors: {}
     };
   },
   methods: {
@@ -56,6 +66,7 @@ export default {
         // errorの中身であるresponseを分割代入、
         .catch(({ response }) => {
           console.log(response);
+          this.errors = response.data;
         });
     }
   }
