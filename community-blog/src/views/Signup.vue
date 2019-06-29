@@ -42,8 +42,16 @@ export default {
         password: this.password
       })
         .then(response => {
-          console.log(response);
+          // signup, loginの流れ: apiで返ってきたauth dataをjsonでlocalStorageに保存→vue instanceのlocalStorageからauth dataをparseしてobjectでdataに保存→vue instanceにauth dataが復元できたので各page, componentでもauth dataを利用できる
+          // response.data.dataにapiから登録成功時のdataが入っている
+          // console.log(response);
+          const { data } = response.data;
+          // ローカルにauth dataをJSONで保存
+          localStorage.setItem("auth", JSON.stringify(data));
+          // this.$root.data_nameでvue instanceのdataにアクセス
+          this.$root.auth = data;
         })
+        // errorの中身であるresponseを分割代入、
         .catch(({ response }) => {
           console.log(response);
         });
