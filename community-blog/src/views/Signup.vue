@@ -41,7 +41,15 @@
             </div>
           </div>
           <div class="form-group text-center">
-            <button @click="registerUser()" class="btn btn-success form-control">Signup</button>
+            <button
+              :disabled="loading"
+              @click="registerUser()"
+              class="btn btn-success form-control"
+            >
+              <!-- fa-spinでスピンさせる -->
+              <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+              {{ loading ? '' : 'Signup' }}
+            </button>
           </div>
         </div>
       </div>
@@ -60,13 +68,16 @@ export default {
       // apiから返ってきたエラー内容格納
       errors: {},
       // !errors.name等だけだと最初のリロード時もis-validクラスが付与されてしまうので、signupボタンを押したかどうかのフラグも判定材料にする
-      submitted: false
+      submitted: false,
+      // signupボタンでloading中かどうか
+      loading: false
     };
   },
   methods: {
     registerUser() {
       console.log(this.name, this.email, this.password);
-
+      // ローディング中
+      this.loading = true;
       Axios.post("https://react-blog-api.bahdcasts.com/api/auth/register", {
         name: this.name,
         email: this.email,
@@ -83,6 +94,8 @@ export default {
           this.$root.auth = data;
           // Signupボタンを押したよフラグ
           this.submitted = true;
+          // ローディング中でない
+          this.loading = false;
           // redirect
           this.$router.push("home");
         })
@@ -91,6 +104,7 @@ export default {
           console.log(response);
           this.errors = response.data;
           this.submitted = true;
+          this.loading = false;
         });
     }
   }
