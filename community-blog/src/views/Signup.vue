@@ -50,6 +50,8 @@ export default {
           localStorage.setItem("auth", JSON.stringify(data));
           // this.$root.data_nameでvue instanceのdataにアクセス
           this.$root.auth = data;
+          // redirect
+          this.$router.push("home");
         })
         // errorの中身であるresponseを分割代入、
         .catch(({ response }) => {
