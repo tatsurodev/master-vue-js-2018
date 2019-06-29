@@ -11,7 +11,7 @@
             <input v-model="email" type="text" placeholder="Email" class="form-control">
           </div>
           <div class="form-group">
-            <input v-model="password" type="passowrd" placeholder="Password" class="form-control">
+            <input v-model="password" type="password" placeholder="Password" class="form-control">
           </div>
           <div class="form-group text-center">
             <button @click="registerUser()" class="btn btn-success form-control">Signup</button>
@@ -22,6 +22,8 @@
   </div>
 </template>
 <script>
+import Axios from "axios";
+
 export default {
   data() {
     return {
@@ -33,6 +35,18 @@ export default {
   methods: {
     registerUser() {
       console.log(this.name, this.email, this.password);
+
+      Axios.post("https://react-blog-api.bahdcasts.com/api/auth/register", {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        });
     }
   }
 };
