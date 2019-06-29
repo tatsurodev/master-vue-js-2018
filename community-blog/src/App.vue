@@ -2,7 +2,9 @@
   <div id="app">
     <Navbar/>
     <!-- routerで設定したcomponentがrouter-viewに表示 -->
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
