@@ -29,7 +29,10 @@
             </div>
           </div>
           <div class="form-group text-center">
-            <button @click="loginUser()" class="btn btn-success form-control">Login</button>
+            <button :disabled="loading" @click="loginUser()" class="btn btn-success form-control">
+              <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+              {{ loading ? '' : 'Login' }}
+            </button>
           </div>
         </div>
       </div>
@@ -44,21 +47,25 @@ export default {
     return {
       email: "",
       password: "",
-      errors: {}
+      errors: {},
+      loading: false
     };
   },
   methods: {
     loginUser() {
+      this.loading = true;
       Axios.post("https://react-blog-api.bahdcasts.com/api/auth/login", {
         email: this.email,
         password: this.password
       })
         .then(response => {
+          this.loading = false;
           this.$root.auth = response.data.data;
           localStorage.setItem("auth", JSON.stringify(response.data.data));
           this.$router.push("home");
         })
         .catch(({ response }) => {
+          this.loading = false;
           if (response.status === 401) {
             this.errors = {
               email: ["These credentials do not match our records."]
