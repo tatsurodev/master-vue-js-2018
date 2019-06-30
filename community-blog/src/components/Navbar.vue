@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <router-link class="navbar-brand" to="/">
         <img src="../assets/logo.png" width="30px" height="30px">
-      </a>
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
