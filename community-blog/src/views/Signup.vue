@@ -96,13 +96,15 @@ export default {
           this.submitted = true;
           // ローディング中でない
           this.loading = false;
+          this.$noty.success("Successfully registered.");
           // redirect
-          this.$router.push("home");
+          this.$router.push("/");
         })
         // errorの中身であるresponseを分割代入、
         .catch(({ response }) => {
           console.log(response);
           this.errors = response.data;
+          this.$noty.error("Ooops ! something went wrong.");
           this.submitted = true;
           this.loading = false;
         });

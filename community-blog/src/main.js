@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import VueNoty from 'vuejs-noty'
+Vue.use(VueNoty)
+import 'vuejs-noty/dist/vuejs-noty.css'
+
 Vue.config.productionTip = false
 
 // auth dataをlocalStorageから復元
