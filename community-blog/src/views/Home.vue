@@ -6,7 +6,7 @@
       v-for="article in articles.data"
       :key="article.id"
     >
-      <Article/>
+      <Article :article="article"/>
     </div>
   </div>
 </template>
