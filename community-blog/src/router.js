@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
+import Article from './views/Article.vue'
 
 // pluginをvueに登録
 Vue.use(Router)
@@ -21,6 +22,10 @@ const router = new Router({
         {
             path: '/',
             component: Home
+        },
+        {
+            path: '/article/:id',
+            component: Article
         }
     ]
 })
