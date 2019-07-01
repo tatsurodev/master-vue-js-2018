@@ -43,6 +43,12 @@
 <script>
 import Axios from "axios";
 export default {
+  beforeRouteEnter(to, from, next) {
+    if (localStorage.getItem("auth")) {
+      return next({ path: "/" });
+    }
+    next();
+  },
   data() {
     return {
       email: "",
