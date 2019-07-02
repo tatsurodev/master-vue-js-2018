@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import VueDisqus from 'vue-disqus'
+Vue.use(VueDisqus)
+
 import VueNoty from 'vuejs-noty'
 Vue.use(VueNoty)
 import 'vuejs-noty/dist/vuejs-noty.css'

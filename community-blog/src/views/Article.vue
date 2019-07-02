@@ -8,6 +8,12 @@
           <div class="card-body">
             <h1 class="card-title text-center my-3">{{ article.title }}</h1>
             <div class="article-content" v-html="article.content"></div>
+            <div class="comments my-4">
+              <!-- template内でjsのtemplate literalを使用する場合、その外にdouble quotationを忘れないこと -->
+              <!-- ex. <router-link :to="`http://example.com/article/${article.slug}`"></router-link> -->
+              <!-- urlをwindow objectを使って動的にセットしたいが、template内でwindow等のglobal objectが参照できないのでscript内でgetしておく -->
+              <vue-disqus shortname="community-blog" :identifier="article.slug" :url="url"></vue-disqus>
+            </div>
           </div>
         </div>
         <div class="loader" v-else>
@@ -28,7 +34,8 @@ export default {
   data() {
     return {
       article: {},
-      loading: true
+      loading: true,
+      url: window.location.href
     };
   },
   methods: {
