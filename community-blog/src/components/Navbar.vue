@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <router-link class="navbar-brand" to="/">
-        <img src="../assets/logo.png" width="30px" height="30px">
+        <img src="../assets/logo.png" width="30px" height="30px" />
       </router-link>
       <button
         class="navbar-toggler"
@@ -23,6 +23,9 @@
           </li>
           <li class="nav-item" v-if="!authUser">
             <router-link class="nav-link" to="/signup">Signup</router-link>
+          </li>
+          <li class="nav-item" v-if="authUser">
+            <router-link class="nav-link" to="/articles/create">Create New Article</router-link>
           </li>
           <li class="nav-item dropdown" v-if="authUser">
             <a
