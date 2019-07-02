@@ -10,7 +10,15 @@
               button-class="btn btn-danger"
               @change="onChange"
             />
-            <input type="text" placeholder="title" class="form-control mb-3" />
+            <select class="form-control my-3" v-model="category">
+              <option selected>Select a Category</option>
+              <option
+                :value="category.id"
+                v-for="category in categories"
+                :key="category.id"
+              >{{ category.name }}</option>
+            </select>
+            <input type="text" placeholder="Title" class="form-control my-3" />
             <wysiwyg v-model="content" />
             <div class="text-center">
               <button @click="createArticle()" class="btn btn-success btn-lg mt-3">Create Article</button>
@@ -24,10 +32,11 @@
 <script>
 import PictureInput from "vue-picture-input";
 import Axios from "axios";
+import config from "@/config";
 
 export default {
   mounted() {
-    console.log(process.env);
+    this.getCategories();
   },
   components: {
     PictureInput
@@ -35,7 +44,11 @@ export default {
   data() {
     return {
       content: "",
-      image: null
+      image: null,
+      // 取得したcategoryを配列で格納
+      categories: [],
+      // selectで選択したcategoryとv-model
+      category: ""
     };
   },
   methods: {
@@ -53,6 +66,19 @@ export default {
       Axios.post(process.env.VUE_APP_CLOUDINARY_URL, form).then(res =>
         console.log(res)
       );
+    },
+    // categories自体何度も変わるものでないのでlocalStorageにキャッシュし、キャッシュがあればそのcategoriesをjsonからobjectにparse, なければapiからobjectを取得し、jsonにstringifyしてlocalStorageに保存
+    getCategories() {
+      const categories = localStorage.getItem("categories");
+      if (categories) {
+        this.categories = JSON.parse(categories);
+        return;
+      }
+      Axios.get(`${config.apiUrl}/categories`).then(res => {
+        this.categories = res.data.categories;
+        // categoriesはpromiseなのでaxios.getの外に書くとまだ取得できていない時に実行されてしまうので注意
+        localStorage.setItem("categories", JSON.stringify(this.categories));
+      });
     }
   }
 };
