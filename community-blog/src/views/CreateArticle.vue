@@ -26,6 +26,9 @@ import PictureInput from "vue-picture-input";
 import Axios from "axios";
 
 export default {
+  mounted() {
+    console.log(process.env);
+  },
   components: {
     PictureInput
   },
@@ -43,13 +46,13 @@ export default {
       // FormDataはjsのbuilt-in object
       const form = new FormData();
       form.append("file", this.image);
-      form.append("upload_preset", "community-blog");
-      form.append("api_key", "489361735719363");
+      // process.env.環境変数名で.env.localで設定した変数を使用でき、.gitignoreにも記載されているのでsecure
+      form.append("upload_preset", process.env.VUE_APP_CLOUDINARY_PRESET);
+      form.append("api_key", process.env.VUE_APP_CLOUDINARY_API_KEY);
       // cloudinaryに画像アップロード
-      Axios.post(
-        "https://api.cloudinary.com/v1_1/edetchi/image/upload",
-        form
-      ).then(res => console.log(res));
+      Axios.post(process.env.VUE_APP_CLOUDINARY_URL, form).then(res =>
+        console.log(res)
+      );
     }
   }
 };
