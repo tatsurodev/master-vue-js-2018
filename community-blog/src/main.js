@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg)
+import "vue-wysiwyg/dist/vueWysiwyg.css";
+
 import VueDisqus from 'vue-disqus'
 Vue.use(VueDisqus)
 
