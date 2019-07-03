@@ -21,7 +21,14 @@
             <input type="text" placeholder="Title" class="form-control my-3" v-model="title" />
             <wysiwyg v-model="content" />
             <div class="text-center">
-              <button @click="createArticle()" class="btn btn-success btn-lg mt-3">Create Article</button>
+              <button
+                :disabled="loading"
+                @click="createArticle()"
+                class="btn btn-success btn-lg mt-3"
+              >
+                <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+                {{ loading ? '' : 'Create Article' }}
+              </button>
             </div>
           </div>
         </div>
@@ -64,6 +71,7 @@ export default {
       this.image = image;
     },
     createArticle() {
+      this.loading = true;
       // FormDataはjsのbuilt-in object
       const form = new FormData();
       form.append("file", this.image);
@@ -89,14 +97,17 @@ export default {
             }
           )
             .then(() => {
+              this.loading = false;
               this.$noty.success("Article created successfully.");
               this.$router.push("/");
             })
             .catch(() => {
+              this.loading = false;
               this.$noty.error("Ooops ! something went wrong.");
             })
         )
         .catch(() => {
+          this.loading = false;
           this.$noty.error("Ooops ! something went wrong.");
         });
     },
