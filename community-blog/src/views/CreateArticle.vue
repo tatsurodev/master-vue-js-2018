@@ -71,6 +71,10 @@ export default {
       this.image = image;
     },
     createArticle() {
+      if (!this.title || !this.image || !this.category || !this.content) {
+        this.$noty.error("Please fill in all fields.");
+        return;
+      }
       this.loading = true;
       // FormDataはjsのbuilt-in object
       const form = new FormData();
