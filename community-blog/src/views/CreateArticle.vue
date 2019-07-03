@@ -18,7 +18,7 @@
                 :key="category.id"
               >{{ category.name }}</option>
             </select>
-            <input type="text" placeholder="Title" class="form-control my-3" />
+            <input type="text" placeholder="Title" class="form-control my-3" v-model="title" />
             <wysiwyg v-model="content" />
             <div class="text-center">
               <button @click="createArticle()" class="btn btn-success btn-lg mt-3">Create Article</button>
@@ -35,6 +35,12 @@ import Axios from "axios";
 import config from "@/config";
 
 export default {
+  beforeRouteEnter(to, from, next) {
+    if (!localStorage.getItem("auth")) {
+      next({ path: "/login" });
+    }
+    next();
+  },
   mounted() {
     this.getCategories();
   },
@@ -43,12 +49,14 @@ export default {
   },
   data() {
     return {
+      title: "",
       content: "",
       image: null,
       // 取得したcategoryを配列で格納
       categories: [],
       // selectで選択したcategoryとv-model
-      category: ""
+      category: "",
+      loading: false
     };
   },
   methods: {
@@ -63,9 +71,34 @@ export default {
       form.append("upload_preset", process.env.VUE_APP_CLOUDINARY_PRESET);
       form.append("api_key", process.env.VUE_APP_CLOUDINARY_API_KEY);
       // cloudinaryに画像アップロード
-      Axios.post(process.env.VUE_APP_CLOUDINARY_URL, form).then(res =>
-        console.log(res)
-      );
+      Axios.post(process.env.VUE_APP_CLOUDINARY_URL, form)
+        .then(res =>
+          // postの第一引数path, 第二引数data, 第三引数config option
+          Axios.post(
+            `${config.apiUrl}/articles`,
+            {
+              title: this.title,
+              content: this.content,
+              category_id: this.category,
+              imageUrl: res.data.secure_url
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${this.$root.auth.token}`
+              }
+            }
+          )
+            .then(() => {
+              this.$noty.success("Article created successfully.");
+              this.$router.push("/");
+            })
+            .catch(() => {
+              this.$noty.error("Ooops ! something went wrong.");
+            })
+        )
+        .catch(() => {
+          this.$noty.error("Ooops ! something went wrong.");
+        });
     },
     // categories自体何度も変わるものでないのでlocalStorageにキャッシュし、キャッシュがあればそのcategoriesをjsonからobjectにparse, なければapiからobjectを取得し、jsonにstringifyしてlocalStorageに保存
     getCategories() {
