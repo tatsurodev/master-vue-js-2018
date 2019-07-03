@@ -4,12 +4,18 @@
     <ul>
       <li v-for="(todoitem, index) in todos" :key="index">{{ todoitem }}</li>
     </ul>
+    <TodosCount :count="todos.length" />
   </div>
 </template>
 
 <script>
+import TodosCount from "./components/TodosCount";
+
 export default {
   name: "app",
+  components: {
+    TodosCount
+  },
   data: () => ({
     todo: "",
     todos: []
