@@ -5,8 +5,8 @@
 export default {
   computed: {
     count() {
-      return this.$store.getters.todosCount;
+      return this.$store.getters['todos/todosCount']
     }
   }
-};
+}
 </script>

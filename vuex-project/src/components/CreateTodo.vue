@@ -10,7 +10,7 @@ export default {
   methods: {
     saveTodo() {
       // 非同期処理のactionsをdispatchして、新規todoをtodosに追加
-      this.$store.dispatch("addTodo", this.todo);
+      this.$store.dispatch("todos/addTodo", this.todo);
     }
   }
 };
