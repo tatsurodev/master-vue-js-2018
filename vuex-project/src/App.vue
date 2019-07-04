@@ -1,33 +1,25 @@
 <template>
   <div id="app">
-    <input v-model="todo" @keyup.enter="saveTodo()" type="text" placeholder="Todo item" />
-    <ul>
-      <li v-for="(todoitem, index) in todos" :key="index">{{ todoitem }}</li>
-    </ul>
-    <TodosCount :count="todos.length" />
+    <CreateTodo />
+    <ListTodos />
+    <TodosCount />
   </div>
 </template>
 
 <script>
+import CreateTodo from "./components/CreateTodo";
+import ListTodos from "./components/ListTodos";
 import TodosCount from "./components/TodosCount";
 
 export default {
   name: "app",
   components: {
+    CreateTodo,
+    ListTodos,
     TodosCount
   },
-  data: () => ({
-    todo: "",
-    todos: []
-  }),
-  methods: {
-    saveTodo() {
-      // スプレッド演算子
-      // a = [1, 2, 3];
-      // console.log(...a)は、console.log(1, 2, 3)と同義
-      // 配列todosにtodoを追加
-      this.todos = [...this.todos, this.todo];
-    }
+  mounted() {
+    this.$store.dispatch("getTodos");
   }
 };
 </script>
