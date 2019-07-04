@@ -19,7 +19,7 @@ export default {
     TodosCount
   },
   mounted() {
-    this.$store.dispatch("getTodos");
+    this.$store.dispatch("todos/getTodos");
   }
 };
 </script>
