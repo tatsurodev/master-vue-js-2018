@@ -27,6 +27,9 @@ new Vue({
         disabled() {
             // 0 or 入力なし or loading中
             return this.amount === 0 || !this.amount || this.loading
+        },
+        converted() {
+            return this.loading ? 'Converting ...' : 'Convert'
         }
     },
     methods: {
@@ -71,3 +74,4 @@ new Vue({
         }
     }
 })
+
