@@ -14,10 +14,10 @@ new Vue({
     },
     computed: {
         // 通貨リストをv-for用にオブジェクトから配列にする
-        formattedCurrencies() {
-            // Object.valuesでオブジェクトの値を配列にして返す
-            return Object.values(this.currencies)
-        },
+        // formattedCurrencies() {
+        //    // Object.valuesでオブジェクトの値を配列にして返す
+        //     return Object.values(this.currencies)
+        // },
         // convert結果を表示
         calculateResult() {
             // inputから取得できるdataは文字列なので型変換して計算
